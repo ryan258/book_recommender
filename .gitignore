@@ -3,9 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment
-venv/
-env/
+# Poetry
+.venv/
+poetry.lock
 
 # IDE
 .vscode/
@@ -21,3 +21,6 @@ env/
 dist/
 build/
 *.egg-info/
+
+# pytest
+.pytest_cache/

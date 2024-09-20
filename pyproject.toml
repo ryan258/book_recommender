@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "book-recommender"
+version = "0.1.0"
+description = "A book recommendation system using OpenAI's GPT model"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+packages = [{include = "book_recommender"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+openai = "^0.27.8"  # This version is known to work with the code we've written
+pydantic = "^1.10.7"
+python-dotenv = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+book-recommender = "main:main"

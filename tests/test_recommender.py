@@ -1,27 +1,25 @@
-import unittest
-from unittest.mock import patch
-from src.recommender import get_book_recommendation
-from src.models import BookRecommendation
+import pytest
+from unittest.mock import patch, MagicMock
+from book_recommender.recommender import get_book_recommendation
+from book_recommender.models import BookRecommendation
 
-class TestRecommender(unittest.TestCase):
-    @patch('src.recommender.openai.chat.completions.create')
-    def test_get_book_recommendation(self, mock_create):
-        mock_create.return_value.choices[0].message.function_call.arguments = '''
-        {
-            "title": "The Time Machine",
-            "author": "H.G. Wells",
-            "genre": "Science Fiction",
-            "publication_year": 1895,
-            "summary": "A scientist invents a time machine and travels to the future, encountering two post-human races.",
-            "reasons": ["Classic science fiction novel", "Explores themes of time travel", "Philosophical undertones"]
-        }
-        '''
+@patch('book_recommender.recommender.OpenAI')
+def test_get_book_recommendation(mock_openai):
+    mock_client = MagicMock()
+    mock_openai.return_value = mock_client
+    mock_client.chat.completions.create.return_value.choices[0].message.function_call.arguments = '''
+    {
+        "title": "The Time Machine",
+        "author": "H.G. Wells",
+        "genre": "Science Fiction",
+        "publication_year": 1895,
+        "summary": "A scientist invents a time machine and travels to the future, encountering two post-human races.",
+        "reasons": ["Classic science fiction novel", "Explores themes of time travel", "Philosophical undertones"]
+    }
+    '''
 
-        result = get_book_recommendation("I like science fiction with time travel")
-        
-        self.assertIsInstance(result, BookRecommendation)
-        self.assertEqual(result.title, "The Time Machine")
-        self.assertEqual(result.author, "H.G. Wells")
-
-if __name__ == '__main__':
-    unittest.main()
+    result = get_book_recommendation("I like science fiction with time travel")
+    
+    assert isinstance(result, BookRecommendation)
+    assert result.title == "The Time Machine"
+    assert result.author == "H.G. Wells"

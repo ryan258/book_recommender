@@ -1,4 +1,4 @@
-from src.recommender import get_book_recommendation
+from book_recommender.recommender import get_book_recommendation
 
 def main():
     print("Welcome to the Book Recommender!")

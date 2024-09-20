@@ -7,7 +7,7 @@ openai.api_key = OPENAI_API_KEY
 
 def get_book_recommendation(user_preferences: str) -> BookRecommendation:
     try:
-        response = openai.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": "You are a knowledgeable book recommendation system."},
@@ -21,8 +21,13 @@ def get_book_recommendation(user_preferences: str) -> BookRecommendation:
             function_call={"name": "recommend_book"}
         )
 
-        recommendation_dict = json.loads(response.choices[0].message.function_call.arguments)
-        return BookRecommendation(**recommendation_dict)
-    except openai.error.OpenAIError as e:
+        function_call = response['choices'][0]['message'].get('function_call')
+        if function_call and function_call['name'] == 'recommend_book':
+            recommendation_dict = json.loads(function_call['arguments'])
+            return BookRecommendation(**recommendation_dict)
+        else:
+            print("Unexpected response format from OpenAI API")
+            return None
+    except Exception as e:
         print(f"An error occurred while getting the book recommendation: {str(e)}")
         return None

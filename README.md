@@ -4,20 +4,22 @@ This is a simple book recommendation system that uses OpenAI's GPT model to gene
 
 ## Installation
 
-1. Clone this repository:
+1. Ensure you have Poetry installed. If not, install it by following the instructions [here](https://python-poetry.org/docs/#installation).
+
+2. Clone this repository:
 
    ```
    git clone https://github.com/yourusername/book-recommender.git
    cd book-recommender
    ```
 
-2. Install the required packages:
+3. Install the project dependencies using Poetry:
 
    ```
-   pip install -r requirements.txt
+   poetry install
    ```
 
-3. Set up your OpenAI API key:
+4. Set up your OpenAI API key:
    - Create a `.env` file in the root directory
    - Add your OpenAI API key to the file:
      ```
@@ -26,10 +28,17 @@ This is a simple book recommendation system that uses OpenAI's GPT model to gene
 
 ## Usage
 
-Run the main script:
+Activate the Poetry environment and run the main script:
 
 ```
+poetry shell
 python main.py
+```
+
+Alternatively, you can use the Poetry run command:
+
+```
+poetry run python main.py
 ```
 
 Follow the prompts to enter your book preferences and receive a recommendation.
@@ -39,7 +48,7 @@ Follow the prompts to enter your book preferences and receive a recommendation.
 To run the tests:
 
 ```
-python -m unittest discover tests
+poetry run pytest
 ```
 
 ## Contributing
